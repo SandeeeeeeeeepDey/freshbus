@@ -96,18 +96,19 @@ def categorize_proximity(days):
         return 'coldest'
 
 def catagorizing_days(m_df):
+    print("categorizing proximities function initiated...")
     days_columns = [col for col in m_df.columns if 'Days Until' in col or 'Days Since' in col]
 
     label_encoders = {}
 
-    for col in days_columns:
+    for col in tqdm(days_columns, total = len(days_columns)):
         m_df[col + '_Proximity'] = m_df[col].apply(categorize_proximity)
         le = LabelEncoder()
         m_df[col + '_Proximity'] = le.fit_transform(m_df[col + '_Proximity'])
         label_encoders[col + '_Proximity'] = le
 
     m_df.drop(columns=days_columns, inplace=True)
-    # print("## catagorizing_days Complete...")
+    print("Catagorizing priximity features Complete...\n")
     return m_df
 
 def construct_features(s):
@@ -115,7 +116,7 @@ def construct_features(s):
 
     # Time Features
     with tqdm(total=6, desc="Time Features", leave=False) as pbar:
-        tqdm.write("Processing Time Features...")
+        tqdm.write("Fest Features Cunstruct Fn initiated...")
         f_df['Journey DateTime'] = pd.to_datetime(f_df['Journey DateTime'])  # Ensure the column is in datetime format
         f_df['Month'] = f_df['Journey DateTime'].dt.month
         f_df['Day'] = f_df['Journey DateTime'].dt.day
@@ -151,7 +152,7 @@ def construct_features(s):
         f_df["Wedding_Season"].fillna("No Wedding", inplace=True)
         pbar.update(1)
 
-    tqdm.write("Feature construction completed.")
+    tqdm.write("Feature construction completed.\n")
 
     return f_df
 

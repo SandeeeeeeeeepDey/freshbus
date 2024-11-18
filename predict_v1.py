@@ -65,15 +65,23 @@ def predict_demand():
         'stoppage_lat':[stoppage_lat],
         'stoppage_long':[stoppage_long],
     })
-    # input_data = get_long_lat(input_data, "boarding", "stoppage")
+    # for i in boarding_lat:
+    #     print(i, type(i))
+    # print(type(boarding_lat[0]), len(boarding_lat), boarding_lat[0])
+    # print(input_data.columns)
+    input_data = get_long_lat(input_data, "boarding", "stoppage")
+
+    print("boarding_lat---------", input_data["boarding_lat"], type(input_data["boarding_lat"]), type(input_data["boarding_lat"][0][0]))
+    # print("boarding_long---------", input_data["boarding_long"])
+    # print("stoppage_lat---------", input_data["stoppage_lat"])
+    # print("stoppage_long---------", input_data["stoppage_long"])
+    # for i in boarding_lat:
+    #     print(i, type(i))
 
     feature_df = construct_features(input_data)
     
     feature_df = catagorizing_days(feature_df)
-    # print(feature_df.columns)
-    # print(feature_df.boarding_name)
-    # print(feature_df.boarding_lat)
-    # print(feature_df.boarding_timings)
+
     feature_df = new_get_dummy(feature_df, "boarding", "stoppage")
 
     #To have all the required columns in the df
@@ -82,16 +90,13 @@ def predict_demand():
             feature_df[col] = pd.NA
 
     df_encoded = feature_df.copy()
-    # print("between_names########", between_names)
     #Cat Cols
     categorical_columns = ['Day of Week', 'source', 'destination', 'School_vacation', 'Wedding_Season', 'boarding_Wipro Circle_name'] + between_names
 
-    # print("categorical_columns*************", categorical_columns)
     label_encoders = {}
 
     for column in categorical_columns:
         le = LabelEncoder()
-        # print(column)
         df_encoded[column] = le.fit_transform(df_encoded[column])
         label_encoders[column] = le  # Save the encoder for possible inverse transformation
 
@@ -101,40 +106,13 @@ def predict_demand():
     columns_to_drop = other + between_names + lats_features + longs_features + between_verifier
 
     X_test = df_encoded.drop(columns=columns_to_drop)
-    y_test = df_encoded['Ticket No']
-
-
-    # train_split = df_encoded[df_encoded["Journey DateTime"] <= pd.to_datetime("2024-06-01")]
-    # test_split = df_encoded[df_encoded["Journey DateTime"] > pd.to_datetime("2024-06-01")]
-
-    # # Combine both lists into a single list of columns to drop
-    # other = ['Ticket No', 'Journey DateTime', 'Route', "Service_Name", "Seat Fare"]
-    # #columns_to_drop = base_features + moving_date_features + fixed_date_features + between_verifier + dist_duration_features + between_features + lats_features + longs_features + between_names
-    # columns_to_drop = other + between_names + lats_features + longs_features
-
-    # # Drop the specified columns from both X_train and X_test
-    # X_train = train_split.drop(columns=columns_to_drop)
-    # y_train = train_split['Ticket No']
-
-    # X_test = test_split.drop(columns=columns_to_drop)
-    # y_test = test_split['Ticket No']
 
 
     # Replace special characters in feature names to ensure compatibility with LightGBM
-    # X_train.columns = X_train.columns.str.replace(r'[^A-Za-z0-9_]+', '_', regex=True)
     X_test.columns = X_test.columns.str.replace(r'[^A-Za-z0-9_]+', '_', regex=True)
-    
-    features_python = {str(feature) for feature in model.feature_names_in_}
-    print("9999999999999999",len(set(X_test.columns) - set(features_python)), set(X_test.columns) - set(features_python))
-    print("9999999999999999", len(set(features_python) - set(X_test.columns)), set(features_python) - set(X_test.columns))
 
-    print("\n++++++++++",set(X_test.columns))
-    print("\n++++++++++",set(features_python))
     y_pred = model.predict(X_test)
-    
-    print(type(y_pred))
-    # print(feature_df, "HHHHHHHHHHHHHHHHk")
-    #jsonify(feature_df.shape)
+
     return jsonify(y_pred[0])  
     
     # Perform feature engineering
