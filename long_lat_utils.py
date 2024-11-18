@@ -15,7 +15,7 @@ dict_to_get_long_lat_from = {'Nayandahalli': (12.9417695999146, 77.5251083374023
  'Alipiri bus stop': (13.6462497711182, 79.4050674438477),
  'Cherlopalli bus stop': (13.6140995025635, 79.3631286621094),
  'Chandragiri Busstop': (13.5881404876709, 79.3160781860352),
- 'Chitoor Bypass': (0.0, 0.0),
+ 'Chitoor Bypass': (0.0, 0.0), # not found
  'Lalbagh': (12.9551095962524, 77.5857391357422),
  'Silk Board Junction': (12.9179801940918, 77.6221237182617),
  'HSR Layout': (12.9165897369385, 77.6349563598633),
@@ -26,11 +26,11 @@ dict_to_get_long_lat_from = {'Nayandahalli': (12.9417695999146, 77.5251083374023
  'Marathahalli Kalamandir': (12.9911003112793, 77.6875991821289),
  'Anand Rao Circle': (12.9801597595215, 77.5750198364258),
  'RTC Busstand(Srinivasam cmplx)': (13.631739616394, 79.4288177490234),
- 'Baiyyappanahalli': (0.0, 0.0),
- 'Leela Mahal BUS STOP': (0.0, 0.0),
- 'Corporation Circle': (0.0, 0.0),
+ 'Baiyyappanahalli': (0.0, 0.0), # not found
+ 'Leela Mahal BUS STOP': (0.0, 0.0), # not found
+ 'Corporation Circle': (0.0, 0.0), # not found
  'Maruthi Mandir': (12.9679098129273, 77.5361709594727),
- 'Attiguppe': (0.0, 0.0),
+ 'Attiguppe': (0.0, 0.0), # not found
  'Vijayanagar': (12.9706401824951, 77.5391235351563),
  'Rajajinagar ISKCON Temple': (13.0115699768066, 77.5512771606445),
  'Rajajinagar': (12.9990396499634, 77.5539321899414),
@@ -61,7 +61,7 @@ dict_to_get_long_lat_from = {'Nayandahalli': (12.9417695999146, 77.5251083374023
  'Dilsukhnagar': (17.3687496185303, 78.5263290405274),
  'Kothapet': (17.3675708770752, 78.5391464233399),
  'L B Nagar Metro Station': (17.3498706817627, 78.5480270385742),
- 'L B Nagar-MRF Showroom': (0.0, 0.0),
+ 'L B Nagar-MRF Showroom': (17.343014, 78.556569), #17.343014	78.556569
  'Vanasthalipuram': (17.3375797271729, 78.5701522827148),
  'SR Nagar': (17.4415397644043, 78.4417114257812),
  'Ameerpet': (17.4305801391602, 78.4485931396484),

@@ -71,7 +71,7 @@ def predict_demand():
     # print(input_data.columns)
     input_data = get_long_lat(input_data, "boarding", "stoppage")
 
-    print("boarding_lat---------", input_data["boarding_lat"], type(input_data["boarding_lat"]), type(input_data["boarding_lat"][0][0]))
+    # print("boarding_lat---------", input_data["boarding_lat"], type(input_data["boarding_lat"]), type(input_data["boarding_lat"][0][0]))
     # print("boarding_long---------", input_data["boarding_long"])
     # print("stoppage_lat---------", input_data["stoppage_lat"])
     # print("stoppage_long---------", input_data["stoppage_long"])

@@ -137,4 +137,5 @@ def new_get_dummy(m_df, boarding:str, stoppage: str):
         m_df.at[inx, f"total_duration"] = duration
 
         m_df.at[inx, "o_adrses"] = f"{adrses}"
+    print("Distance and Duration calculated...\n")
     return m_df
