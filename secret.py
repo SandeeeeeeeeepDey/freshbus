@@ -1,1 +1,0 @@
-secret_key = "AIzaSyDclOieRgki91hpUysNeS-wFpu-Jmx_iac"
