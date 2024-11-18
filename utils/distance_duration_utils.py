@@ -1,8 +1,6 @@
 from datetime import datetime, timedelta
 from tqdm import tqdm
-import requests
 from googlemaps import Client
-import pandas as pd
 from secret import secret_key
 
 api_key = secret_key  # Replace with your actual API key

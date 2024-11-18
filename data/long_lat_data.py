@@ -1,5 +1,3 @@
-from tqdm import tqdm
-
 
 dict_to_get_long_lat_from = {'Nayandahalli': (12.9417695999146, 77.5251083374023),
  'Tin factory': (12.9972496032715, 77.6698608398438),
@@ -94,29 +92,3 @@ dict_to_get_long_lat_from = {'Nayandahalli': (12.9417695999146, 77.5251083374023
  'ISB Road Junction': (17.4446887969971, 78.3524551391602),
  'CHITOOR BYPASS JN-KM FRM TPT': (13.1971597671509, 79.0643768310547),
  'Chandragiri Bypass': (13.5782442092896, 79.3107070922852)}
-
-# Delete Experiment
-def get_long_lat(m_df, boarding:str, stoppage:str):
-    print("\nfetching lats and longs...")
-    for inx, row in tqdm(m_df.iterrows(), total=len(m_df)):
-        blong_list = []
-        blat_list = []
-        for i in row[f"{boarding}_name"]:
-            # print("------------------------",i, dict_to_get_long_lat_from[i])
-            blong_list.append(dict_to_get_long_lat_from[i][1])
-            blat_list.append(dict_to_get_long_lat_from[i][0])
-        # print("blong_list",blong_list)
-        # print("blat_list",blat_list)
-        m_df.at[inx, f"{boarding}_long"] = blong_list
-        m_df.at[inx, f"{boarding}_lat"] = blat_list
-
-        # print(m_df.loc[inx, f"{boarding}_long"])
-        slong_list = []
-        slat_list = []
-        for i in row[f"{stoppage}_name"]:
-            slong_list.append(dict_to_get_long_lat_from[i][1])
-            slat_list.append(dict_to_get_long_lat_from[i][0])
-        m_df.at[inx, f"{stoppage}_long"] = slong_list
-        m_df.at[inx, f"{stoppage}_lat"] = slat_list
-    print("Fetching is done\n")
-    return m_df

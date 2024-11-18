@@ -1,4 +1,5 @@
-# m_df = pd.read_parquet("/content/drive/MyDrive/Fresh Bus /Milestone_1B_3/Data/FRESHBUS_Bus_distance_and long_lat_Data_for_starttimes.parquet")
+
+
 moving_date_features = [ 'Moving_Dates_Guru Nanak Jayanti_Days Until_Proximity', 'Moving_Dates_Guru Nanak Jayanti_Days Since_Proximity', 'Moving_Dates_Naraka Chaturdashi_Days Until_Proximity',
  'Moving_Dates_Naraka Chaturdashi_Days Since_Proximity', 'Moving_Dates_Bhai Dooj_Days Until_Proximity', 'Moving_Dates_Bhai Dooj_Days Since_Proximity', 'Moving_Dates_Maha Navami_Days Until_Proximity',
  'Moving_Dates_Maha Navami_Days Since_Proximity', 'Moving_Dates_Vijayadashami (Dussehra)_Days Until_Proximity', 'Moving_Dates_Vijayadashami (Dussehra)_Days Since_Proximity',
@@ -49,13 +50,6 @@ between_names = []
 
 
 other = ['Ticket No', 'Journey DateTime', 'Route', "Service_Name", "Seat Fare"]
-all_features = base_features + moving_date_features + fixed_date_features + between_verifier + dist_duration_features + lats_features + longs_features
-
-
-
-
-
-
 
 
 kk = ['boarding_Wipro Circle_long',
@@ -201,7 +195,6 @@ kk = ['boarding_Wipro Circle_long',
  'boarding_Benz Circle_long',
  'stoppage_Benz Circle_long',
  'boarding_Koti_long',
-
  'boarding_Wipro Circle_lat',
  'boarding_IIIT Hyderabad_lat',
  'boarding_Nallagandla Flyover_lat',

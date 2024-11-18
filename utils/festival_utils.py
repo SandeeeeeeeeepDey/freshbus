@@ -2,7 +2,10 @@
 import pandas as pd
 from tqdm import tqdm
 from sklearn.preprocessing import LabelEncoder
-from festival_data import *
+from data.festival_data import *
+import warnings
+
+warnings.filterwarnings('ignore')
 
 def change_str_dicts_to_datetime(calend_dict_event_year_datetuple):
     ranges = {
