@@ -2,6 +2,8 @@ from datetime import datetime, timedelta
 from tqdm import tqdm
 from googlemaps import Client
 from secret import secret_key
+import os
+secret_key = os.getenv("SECRET_KEY")
 
 api_key = secret_key  # Replace with your actual API key
 gmaps = Client(key=api_key)
