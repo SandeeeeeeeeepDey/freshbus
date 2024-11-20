@@ -1,24 +1,40 @@
 from datetime import datetime, timedelta
 from tqdm import tqdm
 from googlemaps import Client
+import pandas as pd
 from secret import secret_key
-print(secret_key)
+# print(secret_key)
 
 api_key = secret_key  # Replace with your actual API key
 gmaps = Client(key=api_key)
+dist_data = pd.read_csv("./data/distance_dict.csv")
 
+
+# def get_distance_and_duration(origin_lat, origin_lng, dest_lat, dest_lng, departure_time):
+#     """Gets distance and duration between two points using Google Maps API"""
+
+#     origin = (origin_lat, origin_lng)
+#     destination = (dest_lat, dest_lng) 
+#     result = gmaps.distance_matrix(origin, destination, mode="driving", departure_time=departure_time)
+
+#     distance = result['rows'][0]['elements'][0]['distance']['value']/1000
+#     duration = result['rows'][0]['elements'][0]['duration']['value']/3600
+#     origin_addresses = result["origin_addresses"]
+#     destination_addresses = result["destination_addresses"]
+#     return distance, duration, origin_addresses, destination_addresses
 
 def get_distance_and_duration(origin_lat, origin_lng, dest_lat, dest_lng, departure_time):
     """Gets distance and duration between two points using Google Maps API"""
-
-    origin = (origin_lat, origin_lng)
-    destination = (dest_lat, dest_lng)
-    result = gmaps.distance_matrix(origin, destination, mode="driving", departure_time=departure_time)
-
-    distance = result['rows'][0]['elements'][0]['distance']['value']/1000
-    duration = result['rows'][0]['elements'][0]['duration']['value']/3600
-    origin_addresses = result["origin_addresses"]
-    destination_addresses = result["destination_addresses"]
+    # print(origin_lat, origin_lng, dest_lat, dest_lng)
+    distance = dist_data[
+    (dist_data["source"] == origin_lat) &
+    (dist_data["destination"] == origin_lng)]["distance"].iloc[0]
+    # print("------------------------",type(distance), len(distance), distance.iloc[0])
+    duration = dist_data[
+    (dist_data["source"] == origin_lat) &
+    (dist_data["destination"] == origin_lng)]["duration"].iloc[0]
+    origin_addresses = ""
+    destination_addresses = ""
     return distance, duration, origin_addresses, destination_addresses
 
 
@@ -31,11 +47,11 @@ def new_get_dummy(m_df, boarding:str, stoppage: str):
         duration = 0
         source_temp_lat = row[f"{boarding}_lat"][0]
         source_temp_long = row[f"{boarding}_long"][0]
-        # source_temp = row[f"{boarding}_name"][0]
+        source_temp = row[f"{boarding}_name"][0]
 
         destination_temp_lat = row[f"{stoppage}_lat"][0]
         destination_temp_long = row[f"{stoppage}_long"][0]
-        # destination_temp = row[f"{stoppage}_name"][0]
+        destination_temp = row[f"{stoppage}_name"][0]
 
         distances_list_boardings = []
         durations_list_boardings = []
@@ -64,7 +80,7 @@ def new_get_dummy(m_df, boarding:str, stoppage: str):
                     btime = today + timedelta(days=days_to_next_weekday)
                 btime = btime.replace(microsecond=0).strftime('%Y-%m-%d %H:%M:%S')
                 btime = datetime.strptime(btime, '%Y-%m-%d %H:%M:%S')
-            distance_temp, duration_temp, o_adrs, d_adrs = get_distance_and_duration(source_temp_lat, source_temp_long, bla, blo, btime)
+            distance_temp, duration_temp, o_adrs, d_adrs = get_distance_and_duration(source_temp, bna, bla, blo, btime)
             distance += distance_temp
             duration += duration_temp
             distances_list.append(distance_temp)
@@ -78,13 +94,13 @@ def new_get_dummy(m_df, boarding:str, stoppage: str):
             m_df.at[inx, f"{boarding}_{bna}_lat"] = bla
             m_df.at[inx, f"{boarding}_{bna}_long"] = blo
 
-            # source_temp = bna
+            source_temp = bna
             source_temp_lat = bla
             source_temp_long = blo
 
         destination_temp_lat = row[f"{boarding}_lat"][-1]
         destination_temp_long = row[f"{boarding}_long"][-1]
-        # destination_temp = row[f"{boarding}_name"][-1]
+        destination_temp = row[f"{boarding}_name"][-1]
 
         for sna, sla, slo, stime in zip(row[f"{stoppage}_name"], row[f"{stoppage}_lat"], row[f"{stoppage}_long"], row[f"{stoppage}_timings"]):
 
@@ -101,7 +117,7 @@ def new_get_dummy(m_df, boarding:str, stoppage: str):
                 days_to_next_weekday = days_to_next_weekday if days_to_next_weekday != 0 else 7
                 stime = today + timedelta(days=days_to_next_weekday)
 
-            distance_temp, duration_temp, o_adrs, d_adrs = get_distance_and_duration(destination_temp_lat, destination_temp_long, sla, slo, stime)
+            distance_temp, duration_temp, o_adrs, d_adrs = get_distance_and_duration(destination_temp, sna, sla, slo, stime)
             distance += distance_temp
             duration += duration_temp
 
@@ -117,7 +133,7 @@ def new_get_dummy(m_df, boarding:str, stoppage: str):
             m_df.at[inx, f"{stoppage}_{sna}_long"] = slo
 
 
-            # destination_temp = sna
+            destination_temp = sna
             destination_temp_lat = sla
             destination_temp_long = slo
 
