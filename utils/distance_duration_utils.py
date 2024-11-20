@@ -2,11 +2,11 @@ from datetime import datetime, timedelta
 from tqdm import tqdm
 from googlemaps import Client
 import pandas as pd
-from secret import secret_key
+# from secret import secret_key
 # print(secret_key)
 
-api_key = secret_key  # Replace with your actual API key
-gmaps = Client(key=api_key)
+# api_key = secret_key  # Replace with your actual API key
+# gmaps = Client(key=api_key)
 dist_data = pd.read_csv("./data/distance_dict.csv")
 
 
